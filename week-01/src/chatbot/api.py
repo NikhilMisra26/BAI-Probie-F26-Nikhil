@@ -40,6 +40,7 @@ from src.chatbot.models import ChatMessage
 # Your code here:
 # def create_client() -> ...:
 def create_client(settings: Settings = settings) -> OpenAI:
+    """Create an OpenAI client using the API key in settings."""
     client = OpenAI(api_key=settings.OPENAI_API_KEY)
     return client
 
@@ -97,6 +98,7 @@ def create_client(settings: Settings = settings) -> OpenAI:
 def get_chat_response(
     client: OpenAI, messages: List[ChatMessage], model: str
 ) -> ChatMessage:
+    """Send the conversation to OpenAI and return the assistant's reply."""
     try:
         message_dicts = [message.model_dump() for message in messages]
         response = client.chat.completions.create(
@@ -131,4 +133,5 @@ def get_chat_response(
 
 
 def create_system_message() -> ChatMessage:
+    """Create the system message that sets the chatbot's personality."""
     return ChatMessage(role="system", content=SYSTEM_PROMPT)
